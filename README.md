@@ -1,6 +1,6 @@
 This was once part of a program that read health memory from Source engine video games, and then it would show the health on an RGB keyboard.
 
-This is super old, and the entire project files were lost to time, sadly. However, I want to have the code here as some sort of documentation of the project.
+Thanks to archive.org, the original project files were recovered. The project is based on [this one](https://github.com/billism1/KeyboardAudio) which gave me the base framework to interface with the K70. The code to read memory was made through trial and error, finding memory offsets via Cheat Engine.
 
 The result can be found on youtube
 
