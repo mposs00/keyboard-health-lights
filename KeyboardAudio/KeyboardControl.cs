@@ -1,4 +1,4 @@
-namespace KeybaordAudio
+﻿namespace KeybaordAudio
 {
     using System;
     using System.Linq;
@@ -160,35 +160,35 @@ namespace KeybaordAudio
         private IntPtr keyboardUsbDevice;
         private int r, g, b;
 
-        public void ShowPrice()
+        public void LightLoop(int health)
         {
-            Random ra = new Random();
-            foreach (var led in positionMap)
+            foreach (var light in positionMap)
             {
-                r = g = b = 0;
-                r = ra.Next(7);
-                g = ra.Next(5);
-                if (g > r)
-                {
-                    r = g + 1;
-                }
-                SetLed(led, r, g, b);
+                SetLed((int)light, 0, 0, 0);
             }
-            while(true)
+            r = g = b = 0;
+            if (health <= 41)
+                r = 7;
+            else if (health > 41 && health <= 82)
+                r = g = 7;
+            else
+                g = 7;
+            float percent = (float)health / 125f;
+            int lights = (int)(percent * 91);
+            //Console.WriteLine("{0} {1} {2}", health, percent, lights);
+            for (int i = lights; i > 0; i--)
             {
-                int led = ra.Next(144);
-                r = ra.Next(6);
-                g = ra.Next(4);
-                b = 0;
-                if (g > r)
+                if (i < 0)
+                    break;
+                if (i > 91)
+                    i = 91;
+                for (int j = 0; j < 7; j++)
                 {
-                    r = g + 1;
+                    SetLed(i, j, r, g, b);
                 }
-                r++;
-                SetLed(led, r, g, b);
-                Thread.Sleep(25);
-                UpdateKeyboard();
             }
+            Thread.Sleep(20);
+            UpdateKeyboard();
         }
 
         private byte[] positionMap = new byte[]
@@ -599,11 +599,11 @@ namespace KeybaordAudio
             this.dataPacket[2][0] = 0x7F;
             this.dataPacket[2][1] = 0x03;
             this.dataPacket[2][2] = 0x3C;
-            
+
             this.dataPacket[3][0] = 0x7F;
             this.dataPacket[3][1] = 0x04;
             this.dataPacket[3][2] = 0x24;
-            
+
             this.dataPacket[4][0] = 0x07;
             this.dataPacket[4][1] = 0x27;
             this.dataPacket[4][4] = 0xD8;
